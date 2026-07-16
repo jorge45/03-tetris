@@ -4,19 +4,76 @@
   padding: 0;
 }
 
+:root {
+  --bg: #0f0f17;
+  --text: #e0e0e0;
+  --title-color: #7aa2f7;
+  --title-shadow: rgba(122, 162, 247, 0.5);
+  --board-border: #2a2a3a;
+  --board-bg: #1a1a25;
+  --grid-line: #22222e;
+  --label-color: #555570;
+  --value-color: #7aa2f7;
+  --control-text: #888;
+  --kbd-bg: #22223a;
+  --kbd-border: #3a3a5a;
+  --kbd-text: #aaa;
+  --overlay-bg: rgba(10, 10, 20, 0.75);
+  --overlay-title-color: #e57373;
+  --overlay-score-color: #7aa2f7;
+  --btn-bg: #7aa2f7;
+  --btn-text: #0f0f17;
+  --btn-hover-bg: #9bbdff;
+  --switch-bg: #2a2a3a;
+  --switch-knob: #7aa2f7;
+}
+
+body[data-theme="light"] {
+  --bg: #f0f0f5;
+  --text: #23232f;
+  --title-color: #3b5bdb;
+  --title-shadow: rgba(59, 91, 219, 0.35);
+  --board-border: #c9c9d8;
+  --board-bg: #ffffff;
+  --grid-line: #e2e2ec;
+  --label-color: #6b6b85;
+  --value-color: #3b5bdb;
+  --control-text: #55556b;
+  --kbd-bg: #e8e8f2;
+  --kbd-border: #c9c9d8;
+  --kbd-text: #44445a;
+  --overlay-bg: rgba(255, 255, 255, 0.8);
+  --overlay-title-color: #d64545;
+  --overlay-score-color: #3b5bdb;
+  --btn-bg: #3b5bdb;
+  --btn-text: #ffffff;
+  --btn-hover-bg: #5c7cfa;
+  --switch-bg: #c9c9d8;
+  --switch-knob: #3b5bdb;
+}
+
 body {
-  background: #0f0f17;
-  color: #e0e0e0;
+  background: var(--bg);
+  color: var(--text);
   font-family: system-ui, -apple-system, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   user-select: none;
+  transition: background 0.2s, color 0.2s;
 }
 
 .wrapper {
   position: relative;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .game-title {
@@ -24,9 +81,60 @@ body {
   font-size: 32px;
   font-weight: 800;
   letter-spacing: 10px;
-  color: #7aa2f7;
-  text-shadow: 0 0 20px rgba(122, 162, 247, 0.5);
-  margin-bottom: 20px;
+  color: var(--title-color);
+  text-shadow: 0 0 20px var(--title-shadow);
+  margin-bottom: 0;
+}
+
+/* ---- Theme toggle ---- */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.theme-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background: var(--switch-bg);
+  border-radius: 22px;
+  transition: background 0.2s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background: var(--switch-knob);
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(18px);
 }
 
 .game-container {
@@ -37,8 +145,8 @@ body {
 
 #board {
   display: block;
-  border: 1px solid #2a2a3a;
-  background: #1a1a25;
+  border: 1px solid var(--board-border);
+  background: var(--board-bg);
   border-radius: 4px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
 }
@@ -61,7 +169,7 @@ body {
 .label {
   font-size: 10px;
   letter-spacing: 2px;
-  color: #555570;
+  color: var(--label-color);
   font-weight: 600;
 }
 
@@ -69,14 +177,14 @@ body {
   font-family: 'Courier New', Courier, monospace;
   font-size: 26px;
   font-weight: 700;
-  color: #7aa2f7;
+  color: var(--value-color);
   letter-spacing: 1px;
 }
 
 #next-canvas {
   display: block;
-  border: 1px solid #2a2a3a;
-  background: #1a1a25;
+  border: 1px solid var(--board-border);
+  background: var(--board-bg);
   border-radius: 4px;
 }
 
@@ -90,20 +198,20 @@ body {
 
 .controls li {
   font-size: 12px;
-  color: #888;
+  color: var(--control-text);
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
 kbd {
-  background: #22223a;
-  border: 1px solid #3a3a5a;
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
   border-radius: 3px;
   padding: 1px 6px;
   font-size: 11px;
   font-family: inherit;
-  color: #aaa;
+  color: var(--kbd-text);
 }
 
 /* ---- Overlay ---- */
@@ -113,7 +221,7 @@ kbd {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(10, 10, 20, 0.75);
+  background: var(--overlay-bg);
   backdrop-filter: blur(4px);
   border-radius: 4px;
 }
@@ -134,19 +242,19 @@ kbd {
   font-size: 28px;
   font-weight: 800;
   letter-spacing: 4px;
-  color: #e57373;
+  color: var(--overlay-title-color);
 }
 
 #overlay-score {
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
-  color: #7aa2f7;
+  color: var(--overlay-score-color);
 }
 
 #restart-btn {
   margin-top: 8px;
-  background: #7aa2f7;
-  color: #0f0f17;
+  background: var(--btn-bg);
+  color: var(--btn-text);
   border: none;
   border-radius: 6px;
   padding: 10px 28px;
@@ -158,5 +266,5 @@ kbd {
 }
 
 #restart-btn:hover {
-  background: #9bbdff;
+  background: var(--btn-hover-bg);
 }
