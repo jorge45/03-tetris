@@ -214,6 +214,28 @@ kbd {
   color: var(--kbd-text);
 }
 
+/* ---- Toast (power-ups) ---- */
+.toast {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.toast.hidden {
+  display: none;
+}
+
 /* ---- Overlay ---- */
 .overlay {
   position: absolute;
